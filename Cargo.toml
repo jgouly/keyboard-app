@@ -1,0 +1,6 @@
+[package]
+name = "keyboard-app"
+version = "0.1.0"
+authors = ["Joey Gouly <joey.gouly@gmail.com>"]
+
+[dependencies]
