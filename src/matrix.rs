@@ -1,4 +1,5 @@
-trait Matrix<T> {
+pub trait Matrix<T> {
+  fn new() -> Self;
   fn get(&self, row: usize, col: usize) -> T;
   fn put(&mut self, row: usize, col: usize, val: T);
   fn get_num_rows(&self) -> usize;
@@ -11,6 +12,9 @@ macro_rules! gen_matrix {
       data: [$T; $rows * $cols]
     }
     impl Matrix<$T> for $name {
+      fn new() -> $name {
+        $name { data: [<$T as Default>::default(); $rows * $cols] }
+      }
       fn get(&self, row: usize, col: usize) -> $T {
         let c = self.get_num_columns();
         self.data[col + (row * c)]

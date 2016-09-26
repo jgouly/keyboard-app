@@ -1,4 +1,4 @@
-struct RowPins<'a, MC: MatrixConfig + 'a> {
+pub struct RowPins<'a, MC: MatrixConfig + 'a> {
   count: usize,
   conf: &'a MC,
 }
@@ -25,7 +25,7 @@ impl<'a, MC: MatrixConfig> Iterator for RowPins<'a, MC> {
   }
 }
 
-struct ColumnPins<'a, MC: MatrixConfig + 'a> {
+pub struct ColumnPins<'a, MC: MatrixConfig + 'a> {
   count: usize,
   conf: &'a MC,
 }
@@ -52,7 +52,7 @@ impl<'a, MC: MatrixConfig> Iterator for ColumnPins<'a, MC> {
   }
 }
 
-trait MatrixConfig {
+pub trait MatrixConfig {
   type InputPin;
   type OutputPin;
 
