@@ -4,3 +4,4 @@
 mod matrix;
 mod matrix_config;
 pub mod scan;
+mod state;
