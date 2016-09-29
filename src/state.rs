@@ -44,12 +44,18 @@ fn process_key_state<RM, SM>(result: RM, previous_result: RM) -> SM
 
 #[cfg(test)]
 fn private_basic() {
-  gen_matrix!(Matrix2x3u32, 2, 3, u32);
-  gen_matrix!(Matrix2x3KS, 2, 3, KeyState);
+  gen_matrix!(Matrix2x3u32, 2, 2, u32);
+  gen_matrix!(Matrix2x3KS, 2, 2, KeyState);
   let r0 = Matrix2x3u32::new();
   let r1 = Matrix2x3u32::new();
   let result: Matrix2x3KS = process_key_state(r0, r1);
-  assert_eq!(result.data, [KeyState::None; 6]);
+  assert_eq!(result.data, [KeyState::None; 4]);
+
+  let r0 = Matrix2x3u32::new_with_data([1, 0, 1, 0]);
+  let r1 = Matrix2x3u32::new_with_data([0, 1, 1, 0]);
+  let result: Matrix2x3KS = process_key_state(r0, r1);
+  assert_eq!(result.data,
+             [KeyState::Pressed, KeyState::Released, KeyState::Held, KeyState::None]);
 }
 
 #[cfg(test)]
