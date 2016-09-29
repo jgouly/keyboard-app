@@ -11,6 +11,11 @@ macro_rules! gen_matrix {
     struct $name {
       data: [$T; $rows * $cols]
     }
+    impl $name {
+      fn new_with_data(data: [$T; $rows * $cols]) -> $name {
+        $name { data: data }
+      }
+    }
     impl Matrix<$T> for $name {
       fn new() -> $name {
         $name { data: [<$T as Default>::default(); $rows * $cols] }
