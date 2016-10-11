@@ -1,7 +1,7 @@
 use matrix::Matrix;
 
 #[derive(Copy, Clone)]
-#[derive(Debug)]
+#[cfg_attr(test, derive(Debug))]
 #[derive(PartialEq)]
 pub enum KeyState {
   None,

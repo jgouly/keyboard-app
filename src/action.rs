@@ -20,21 +20,17 @@ impl USBBuffer {
   }
 }
 
-fn process_single_action(action: u32, _: KeyState, buf: &mut USBBuffer) {
-  buf.push(action);
+trait Layout {
+  fn process_action(&self, row: usize, col: usize, state: KeyState, buf: &mut USBBuffer);
 }
 
-fn process_actions<SM: Matrix<KeyState>, LM: Matrix<u32>>(states: SM, layout: LM) -> USBBuffer {
+fn process_actions<SM: Matrix<KeyState>, L: Layout>(states: SM, layout: L) -> USBBuffer {
   let mut buf = USBBuffer::new();
-  for c in 0..layout.get_num_columns() {
-    for r in 0..layout.get_num_rows() {
+  for c in 0..states.get_num_columns() {
+    for r in 0..states.get_num_rows() {
       let state = states.get(r, c);
-      match state {
-        KeyState::None => {}
-        _ => {
-          let action = layout.get(r, c);
-          process_single_action(action, state, &mut buf);
-        }
+      if state != KeyState::None {
+        layout.process_action(r, c, state, &mut buf);
       }
     }
   }
@@ -51,7 +47,15 @@ fn private_basic() {
                                            KeyState::None,
                                            KeyState::None,
                                            KeyState::None]);
-  let layout = Matrix2x3u32::new_with_data([0, 1, 2, 3, 4, 5]);
+  struct TestLayout {
+    data: Matrix2x3u32,
+  };
+  impl Layout for TestLayout {
+    fn process_action(&self, r: usize, c: usize, _: KeyState, buf: &mut USBBuffer) {
+      buf.push(self.data.get(r, c));
+    }
+  };
+  let layout = TestLayout { data: Matrix2x3u32::new_with_data([0, 1, 2, 3, 4, 5]) };
   let buf = process_actions(states, layout);
   assert_eq!(buf.data, [1, 0, 0, 0, 0, 0]);
 }
