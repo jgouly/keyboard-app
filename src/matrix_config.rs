@@ -79,7 +79,7 @@ mod tests {
   use super::MatrixConfig;
   #[test]
   fn basic() {
-    struct TestMatrixConfig {};
+    struct TestMatrixConfig {}
     impl MatrixConfig for TestMatrixConfig {
       type InputPin = u32;
       type OutputPin = u32;
