@@ -6,6 +6,7 @@ pub trait Matrix<T> {
   fn get_num_columns(&self) -> usize;
 }
 
+#[macro_export]
 macro_rules! gen_matrix {
   ($name: ident, $rows: expr, $cols: expr, $T: ty) => {
     struct $name {
