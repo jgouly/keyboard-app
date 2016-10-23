@@ -13,6 +13,7 @@ macro_rules! gen_matrix {
       data: [$T; $rows * $cols]
     }
     impl $name {
+      #[allow(dead_code)]
       fn new_with_data(data: [$T; $rows * $cols]) -> $name {
         $name { data: data }
       }
