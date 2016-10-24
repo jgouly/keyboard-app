@@ -10,7 +10,7 @@ pub trait OutputPin {
   fn set_high(&self);
 }
 
-pub fn single_scan<MC: MatrixConfig, RM: Matrix<u32>>(conf: &MC) -> RM
+pub fn single_scan<'a, MC: MatrixConfig<'a>, RM: Matrix<u32>>(conf: &'a MC) -> RM
   where MC::InputPin: InputPin,
         MC::OutputPin: OutputPin
 {
@@ -38,7 +38,7 @@ pub fn private_basic() {
     fn set_low(&self) {}
     fn set_high(&self) {}
   }
-  impl MatrixConfig for TestMatrixConfig {
+  impl<'a> MatrixConfig<'a> for TestMatrixConfig {
     type InputPin = TestPin;
     type OutputPin = TestPin;
     fn get_num_rows(&self) -> usize {
@@ -47,10 +47,10 @@ pub fn private_basic() {
     fn get_num_columns(&self) -> usize {
       3
     }
-    fn get_row_pin(&self, idx: usize) -> Self::InputPin {
+    fn get_row_pin(&'a self, idx: usize) -> Self::InputPin {
       TestPin(idx as u32)
     }
-    fn get_column_pin(&self, idx: usize) -> Self::OutputPin {
+    fn get_column_pin(&'a self, idx: usize) -> Self::OutputPin {
       TestPin(idx as u32)
     }
   }

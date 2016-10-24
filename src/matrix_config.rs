@@ -1,9 +1,9 @@
-pub struct RowPins<'a, MC: MatrixConfig + 'a> {
+pub struct RowPins<'a, MC: MatrixConfig<'a> + 'a> {
   count: usize,
   conf: &'a MC,
 }
 
-impl<'a, MC: MatrixConfig + 'a> RowPins<'a, MC> {
+impl<'a, MC: MatrixConfig<'a>> RowPins<'a, MC> {
   fn new(conf: &'a MC) -> RowPins<'a, MC> {
     RowPins {
       count: 0,
@@ -12,7 +12,7 @@ impl<'a, MC: MatrixConfig + 'a> RowPins<'a, MC> {
   }
 }
 
-impl<'a, MC: MatrixConfig> Iterator for RowPins<'a, MC> {
+impl<'a, MC: MatrixConfig<'a>> Iterator for RowPins<'a, MC> {
   type Item = MC::InputPin;
   fn next(&mut self) -> Option<Self::Item> {
     if self.count == self.conf.get_num_rows() {
@@ -25,12 +25,12 @@ impl<'a, MC: MatrixConfig> Iterator for RowPins<'a, MC> {
   }
 }
 
-pub struct ColumnPins<'a, MC: MatrixConfig + 'a> {
+pub struct ColumnPins<'a, MC: MatrixConfig<'a> + 'a> {
   count: usize,
   conf: &'a MC,
 }
 
-impl<'a, MC: MatrixConfig + 'a> ColumnPins<'a, MC> {
+impl<'a, MC: MatrixConfig<'a>> ColumnPins<'a, MC> {
   fn new(conf: &'a MC) -> ColumnPins<'a, MC> {
     ColumnPins {
       count: 0,
@@ -39,7 +39,7 @@ impl<'a, MC: MatrixConfig + 'a> ColumnPins<'a, MC> {
   }
 }
 
-impl<'a, MC: MatrixConfig> Iterator for ColumnPins<'a, MC> {
+impl<'a, MC: MatrixConfig<'a>> Iterator for ColumnPins<'a, MC> {
   type Item = MC::OutputPin;
   fn next(&mut self) -> Option<Self::Item> {
     if self.count == self.conf.get_num_columns() {
@@ -52,22 +52,22 @@ impl<'a, MC: MatrixConfig> Iterator for ColumnPins<'a, MC> {
   }
 }
 
-pub trait MatrixConfig {
+pub trait MatrixConfig<'a> {
   type InputPin;
   type OutputPin;
 
   fn get_num_rows(&self) -> usize;
   fn get_num_columns(&self) -> usize;
 
-  fn get_row_pin(&self, idx: usize) -> Self::InputPin;
-  fn get_column_pin(&self, idx: usize) -> Self::OutputPin;
+  fn get_row_pin(&'a self, idx: usize) -> Self::InputPin;
+  fn get_column_pin(&'a self, idx: usize) -> Self::OutputPin;
 
-  fn rows(&self) -> RowPins<Self>
+  fn rows(&'a self) -> RowPins<Self>
     where Self: Sized
   {
     RowPins::new(&self)
   }
-  fn columns(&self) -> ColumnPins<Self>
+  fn columns(&'a self) -> ColumnPins<Self>
     where Self: Sized
   {
     ColumnPins::new(&self)
@@ -80,7 +80,7 @@ mod tests {
   #[test]
   fn basic() {
     struct TestMatrixConfig {}
-    impl MatrixConfig for TestMatrixConfig {
+    impl<'a> MatrixConfig<'a> for TestMatrixConfig {
       type InputPin = u32;
       type OutputPin = u32;
       fn get_num_rows(&self) -> usize {
@@ -89,10 +89,10 @@ mod tests {
       fn get_num_columns(&self) -> usize {
         3
       }
-      fn get_row_pin(&self, idx: usize) -> Self::InputPin {
+      fn get_row_pin(&'a self, idx: usize) -> Self::InputPin {
         idx as u32
       }
-      fn get_column_pin(&self, idx: usize) -> Self::OutputPin {
+      fn get_column_pin(&'a self, idx: usize) -> Self::OutputPin {
         idx as u32
       }
     }
