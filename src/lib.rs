@@ -1,8 +1,8 @@
 #![cfg_attr(not(test), no_std)]
 
 #[macro_use]
-mod matrix;
-mod matrix_config;
+pub mod matrix;
+pub mod matrix_config;
 pub mod scan;
-mod state;
-mod action;
+pub mod state;
+pub mod action;

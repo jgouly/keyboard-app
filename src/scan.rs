@@ -1,16 +1,16 @@
 use matrix::Matrix;
 use matrix_config::MatrixConfig;
 
-trait InputPin {
+pub trait InputPin {
   fn read_input(&self) -> u32;
 }
 
-trait OutputPin {
+pub trait OutputPin {
   fn set_low(&self);
   fn set_high(&self);
 }
 
-fn single_scan<MC: MatrixConfig, RM: Matrix<u32>>(conf: &MC) -> RM
+pub fn single_scan<MC: MatrixConfig, RM: Matrix<u32>>(conf: &MC) -> RM
   where MC::InputPin: InputPin,
         MC::OutputPin: OutputPin
 {

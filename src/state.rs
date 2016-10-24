@@ -16,7 +16,7 @@ impl Default for KeyState {
   }
 }
 
-fn process_key_state<RM, SM>(result: RM, previous_result: RM) -> SM
+pub fn process_key_state<RM, SM>(result: RM, previous_result: RM) -> SM
   where RM: Matrix<u32>,
         SM: Matrix<KeyState>
 {
