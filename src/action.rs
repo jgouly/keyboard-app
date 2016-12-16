@@ -3,8 +3,8 @@ use state::KeyState;
 
 const MAX_PACKET_SIZE: usize = 6;
 pub struct USBBuffer {
-  data: [u32; MAX_PACKET_SIZE],
-  count: usize,
+  pub data: [u32; MAX_PACKET_SIZE],
+  pub count: usize,
 }
 
 impl USBBuffer {
@@ -14,7 +14,7 @@ impl USBBuffer {
       count: 0,
     }
   }
-  fn push(&mut self, val: u32) {
+  pub fn push(&mut self, val: u32) {
     self.data[self.count] = val;
     self.count += 1;
   }
