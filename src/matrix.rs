@@ -1,7 +1,8 @@
-pub trait Matrix<T> {
+pub trait Matrix {
+  type T;
   fn new() -> Self;
-  fn get(&self, row: usize, col: usize) -> T;
-  fn put(&mut self, row: usize, col: usize, val: T);
+  fn get(&self, row: usize, col: usize) -> Self::T;
+  fn put(&mut self, row: usize, col: usize, val: Self::T);
   fn get_num_rows(&self) -> usize;
   fn get_num_columns(&self) -> usize;
 }
@@ -18,7 +19,8 @@ macro_rules! gen_matrix {
         $name { data: data }
       }
     }
-    impl Matrix<$T> for $name {
+    impl Matrix for $name {
+      type T = $T;
       fn new() -> $name {
         $name { data: [<$T as Default>::default(); $rows * $cols] }
       }

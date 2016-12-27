@@ -10,7 +10,7 @@ pub trait OutputPin {
   fn set_high(&self);
 }
 
-pub fn single_scan<'a, MC: MatrixConfig<'a>, RM: Matrix<u32>>(conf: &'a MC) -> RM
+pub fn single_scan<'a, MC: MatrixConfig<'a>, RM: Matrix<T=u32>>(conf: &'a MC) -> RM
   where MC::InputPin: InputPin,
         MC::OutputPin: OutputPin
 {

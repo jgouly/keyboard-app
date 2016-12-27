@@ -17,8 +17,8 @@ impl Default for KeyState {
 }
 
 pub fn process_key_state<RM, SM>(result: &RM, previous_result: &RM) -> SM
-  where RM: Matrix<u32>,
-        SM: Matrix<KeyState>
+  where RM: Matrix<T=u32>,
+        SM: Matrix<T=KeyState>
 {
   let mut res = SM::new();
   for c in 0..result.get_num_columns() {

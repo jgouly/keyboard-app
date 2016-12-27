@@ -24,7 +24,7 @@ pub trait Layout {
   fn process_action(&self, row: usize, col: usize, state: KeyState, buf: &mut USBBuffer);
 }
 
-pub fn process_actions<SM: Matrix<KeyState>, L: Layout>(states: SM, layout: &L) -> USBBuffer {
+pub fn process_actions<SM: Matrix<T=KeyState>, L: Layout>(states: SM, layout: &L) -> USBBuffer {
   let mut buf = USBBuffer::new();
   for c in 0..states.get_num_columns() {
     for r in 0..states.get_num_rows() {
