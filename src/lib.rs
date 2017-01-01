@@ -2,7 +2,8 @@
 
 #[macro_use]
 pub mod matrix;
+pub mod action;
+pub mod layout;
 pub mod matrix_config;
 pub mod scan;
 pub mod state;
-pub mod action;

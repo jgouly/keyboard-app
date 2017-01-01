@@ -1,3 +1,4 @@
+use layout::Layout;
 use matrix::Matrix;
 use state::KeyState;
 
@@ -23,10 +24,6 @@ impl USBBuffer {
   pub fn push_mod(&mut self, val: u32) {
     self.mods |= val;
   }
-}
-
-pub trait Layout {
-  fn process_action(&self, row: usize, col: usize, state: KeyState, buf: &mut USBBuffer);
 }
 
 pub fn process_actions<SM: Matrix<T=KeyState>, L: Layout>(states: SM, layout: &L) -> USBBuffer {
