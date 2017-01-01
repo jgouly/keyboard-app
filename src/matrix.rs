@@ -44,14 +44,14 @@ mod tests {
   #[test]
   fn basic() {
     gen_matrix!(Matrix2x3, 2, 3, u32);
-    let m = Matrix2x3 { data: [0, 1, 2, 3, 4, 5] };
+    let m = Matrix2x3::new_with_data([0, 1, 2, 3, 4, 5]);
     assert_eq!(0, m.get(0, 0));
     assert_eq!(1, m.get(0, 1));
     assert_eq!(4, m.get(1, 1));
     assert_eq!(5, m.get(1, 2));
     assert_eq!(2, m.get_num_rows());
     assert_eq!(3, m.get_num_columns());
-    let mut m = Matrix2x3 { data: [0, 1, 2, 3, 4, 5] };
+    let mut m = Matrix2x3::new_with_data([0, 1, 2, 3, 4, 5]);
     m.put(0, 0, 10);
     assert_eq!(10, m.get(0, 0));
   }
