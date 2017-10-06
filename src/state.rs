@@ -17,8 +17,9 @@ impl Default for KeyState {
 }
 
 pub fn process_key_state<RM, SM>(result: &RM, previous_result: &RM) -> SM
-  where RM: Matrix<T=u32>,
-        SM: Matrix<T=KeyState>
+where
+  RM: Matrix<T = u32>,
+  SM: Matrix<T = KeyState>,
 {
   let mut res = SM::new();
   for c in 0..result.get_num_columns() {
@@ -54,8 +55,15 @@ fn private_basic() {
   let r0 = Matrix2x3u32::new_with_data([1, 0, 1, 0]);
   let r1 = Matrix2x3u32::new_with_data([0, 1, 1, 0]);
   let result: Matrix2x3KS = process_key_state(&r0, &r1);
-  assert_eq!(result.data,
-             [KeyState::Pressed, KeyState::Released, KeyState::Held, KeyState::None]);
+  assert_eq!(
+    result.data,
+    [
+      KeyState::Pressed,
+      KeyState::Released,
+      KeyState::Held,
+      KeyState::None
+    ]
+  );
 }
 
 #[cfg(test)]

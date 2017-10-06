@@ -63,12 +63,14 @@ pub trait MatrixConfig<'a> {
   fn get_column_pin(&'a self, idx: usize) -> Self::OutputPin;
 
   fn rows(&'a self) -> RowPins<Self>
-    where Self: Sized
+  where
+    Self: Sized,
   {
     RowPins::new(&self)
   }
   fn columns(&'a self) -> ColumnPins<Self>
-    where Self: Sized
+  where
+    Self: Sized,
   {
     ColumnPins::new(&self)
   }
