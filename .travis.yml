@@ -3,7 +3,7 @@ language: rust
 sudo: false
 
 rust:
-  - nightly-2017-10-05
+  - nightly-2017-11-19
 cache: cargo
 
 script:
